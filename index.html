@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>OGE Word Formation - Тест по английскому</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -11,111 +11,116 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding: 20px;
+            padding: 10px;
             color: #333;
+            touch-action: manipulation;
         }
 
         .container {
             max-width: 1000px;
             margin: 0 auto;
             background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
             overflow: hidden;
         }
 
         header {
             background: linear-gradient(to right, #667eea, #764ba2);
             color: white;
-            padding: 30px;
+            padding: 20px 15px;
             text-align: center;
         }
 
         h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+            line-height: 1.3;
         }
 
         .subtitle {
-            font-size: 1.1rem;
+            font-size: 1rem;
             opacity: 0.9;
+            line-height: 1.4;
         }
 
         .game-info {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 20px;
-            padding: 20px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            padding: 15px;
             background: #f8f9fa;
             border-bottom: 2px solid #e9ecef;
         }
 
         .info-box {
             text-align: center;
-            padding: 15px;
+            padding: 12px 8px;
             background: white;
             border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.08);
         }
 
         .info-value {
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: bold;
             color: #667eea;
-            margin-bottom: 5px;
+            margin-bottom: 3px;
         }
 
         .info-label {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: #666;
+            line-height: 1.2;
         }
 
         /* Навигация по вопросам */
         .questions-navigation {
-            padding: 15px 30px;
+            padding: 12px 15px;
             background: #f8f9fa;
             border-bottom: 1px solid #e9ecef;
         }
 
         .nav-title {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: #666;
             margin-bottom: 10px;
             text-align: center;
         }
 
         .nav-dots {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 6px;
             justify-content: center;
-            max-height: 80px;
+            max-height: 200px;
             overflow-y: auto;
             padding: 5px;
         }
 
         .nav-dot {
-            width: 32px;
-            height: 32px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
             border: 2px solid transparent;
+            flex-shrink: 0;
         }
 
-        .nav-dot:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 8px rgba(0,0,0,0.2);
+        .nav-dot:active {
+            transform: scale(0.95);
         }
 
         .nav-dot.not-answered {
@@ -135,71 +140,48 @@
 
         .nav-dot.current {
             border-color: #667eea;
-            transform: scale(1.1);
-            box-shadow: 0 0 10px rgba(102, 126, 234, 0.4);
-        }
-
-        .nav-dot.answered.current {
-            border-color: #2e7d32;
-        }
-
-        .nav-dot.wrong.current {
-            border-color: #c62828;
+            transform: scale(1.05);
+            box-shadow: 0 0 8px rgba(102, 126, 234, 0.4);
         }
 
         .question-container {
-            padding: 30px;
-            min-height: 400px;
+            padding: 20px 15px;
+            min-height: 300px;
         }
 
         .question-number {
             display: inline-block;
             background: #667eea;
             color: white;
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             text-align: center;
-            line-height: 40px;
+            line-height: 36px;
             font-weight: bold;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .question-text {
-            font-size: 1.2rem;
-            line-height: 1.6;
-            margin-bottom: 30px;
-            padding: 20px;
+            font-size: 1.1rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            padding: 15px;
             background: #f8f9ff;
             border-radius: 10px;
             border-left: 4px solid #667eea;
+            word-wrap: break-word;
         }
 
         .options-container {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-
-        @media (max-width: 768px) {
-            .options-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .nav-dots {
-                max-height: 120px;
-            }
-            
-            .nav-dot {
-                width: 28px;
-                height: 28px;
-                font-size: 0.75rem;
-            }
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
         }
 
         .option {
-            padding: 18px 20px;
+            padding: 16px 15px;
             border: 2px solid #e0e0e0;
             border-radius: 10px;
             cursor: pointer;
@@ -207,12 +189,11 @@
             display: flex;
             align-items: center;
             background: white;
+            min-height: 60px;
         }
 
-        .option:hover {
-            border-color: #667eea;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.1);
+        .option:active {
+            transform: translateY(-1px);
         }
 
         .option.selected {
@@ -231,29 +212,33 @@
         }
 
         .option-letter {
-            width: 30px;
-            height: 30px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             background: #667eea;
             color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: 15px;
+            margin-right: 12px;
             font-weight: bold;
+            flex-shrink: 0;
         }
 
         .option-text {
             flex: 1;
+            font-size: 1rem;
         }
 
         .explanation {
-            margin-top: 20px;
-            padding: 15px;
+            margin-top: 15px;
+            padding: 12px;
             background: #e8f5e9;
             border-radius: 8px;
             border-left: 4px solid #4CAF50;
             display: none;
+            font-size: 0.95rem;
+            line-height: 1.4;
         }
 
         .explanation.show {
@@ -261,29 +246,33 @@
         }
 
         .controls {
-            display: flex;
-            justify-content: space-between;
-            padding: 20px 30px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            padding: 15px;
             background: #f8f9fa;
             border-top: 2px solid #e9ecef;
             position: relative;
         }
 
         .btn {
-            padding: 12px 24px;
+            padding: 14px 12px;
             border: none;
             border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: center;
+            gap: 6px;
             transition: all 0.2s;
+            font-size: 0.9rem;
+            text-align: center;
+            min-height: 48px;
         }
 
-        .btn:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        .btn:active:not(:disabled) {
+            transform: translateY(-1px);
         }
 
         .btn:disabled {
@@ -294,46 +283,36 @@
         .btn-prev {
             background: #6c757d;
             color: white;
-        }
-
-        .btn-prev:hover:not(:disabled) {
-            background: #5a6268;
+            grid-column: 1;
         }
 
         .btn-next {
-            background: #28a745; /* ЗЕЛЕНЫЙ ЦВЕТ вместо синего #667eea */
+            background: #28a745;
             color: white;
-        }
-
-        .btn-next:hover:not(:disabled) {
-            background: #218838; /* Темно-зеленый при наведении */
+            grid-column: 2;
         }
 
         .btn-check {
-            background: #ffc107; /* Желтый цвет */
-            color: #212529; /* Темный текст */
-        }
-
-        .btn-check:hover:not(:disabled) {
-            background: #e0a800; /* Более темный желтый при наведении */
+            background: #ffc107;
+            color: #212529;
+            grid-column: 1 / span 2;
+            order: 1;
         }
 
         .btn-reset {
-            background: #6c757d; /* Серый цвет */
-            color: white; /* Белый текст */
-        }
-
-        .btn-reset:hover:not(:disabled) {
-            background: #5a6268; /* Более темный серый при наведении */
+            background: #6c757d;
+            color: white;
+            grid-column: 1 / span 2;
+            order: 2;
         }
 
         .next-hint {
             position: absolute;
-            bottom: -25px;
+            bottom: -22px;
             left: 0;
             right: 0;
             text-align: center;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: #f44336;
             font-weight: 500;
             animation: pulse 1.5s infinite;
@@ -346,167 +325,159 @@
         }
 
         .results-container {
-            padding: 40px;
+            padding: 20px 15px;
             text-align: center;
             display: none;
         }
 
         .result-emoji {
-            font-size: 4rem;
-            margin-bottom: 20px;
+            font-size: 3rem;
+            margin-bottom: 15px;
         }
 
         .result-title {
             color: #667eea;
-            font-size: 2.5rem;
-            margin-bottom: 30px;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            line-height: 1.3;
         }
 
         .result-score {
-            font-size: 3.5rem;
+            font-size: 2.5rem;
             font-weight: bold;
             color: #764ba2;
-            margin: 20px 0;
+            margin: 15px 0;
         }
 
         .result-details {
             background: #f8f9ff;
-            padding: 25px;
-            border-radius: 15px;
-            margin: 30px auto;
-            max-width: 500px;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px auto;
+            max-width: 100%;
             border: 2px dashed #667eea;
         }
 
         .result-details h3 {
             color: #667eea;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
         }
 
         .result-details p {
-            font-size: 1.1rem;
-            margin: 10px 0;
+            font-size: 1rem;
+            margin: 8px 0;
+            line-height: 1.4;
         }
 
         .result-message {
-            font-size: 1.3rem;
-            margin: 30px 0;
+            font-size: 1.1rem;
+            margin: 20px 0;
             color: #333;
+            line-height: 1.4;
+            padding: 0 10px;
         }
 
         .share-section {
             background: #f0f8ff;
-            padding: 25px;
-            border-radius: 15px;
-            margin-top: 30px;
-            text-align: left;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
         }
 
         .share-section h3 {
             color: #667eea;
             margin-bottom: 15px;
             text-align: center;
+            font-size: 1.2rem;
         }
 
         .share-buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 20px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-top: 15px;
         }
 
-        .btn-telegram {
+        .btn-telegram, .btn-whatsapp {
             background: #0088cc;
             color: white;
             text-decoration: none;
-            padding: 12px 24px;
+            padding: 14px;
             border-radius: 8px;
-            display: inline-flex;
+            display: flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
-        }
-
-        .btn-telegram:hover {
-            background: #006699;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            font-weight: 600;
+            font-size: 0.95rem;
+            min-height: 48px;
         }
 
         .btn-whatsapp {
             background: #25D366;
-            color: white;
-            text-decoration: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-whatsapp:hover {
-            background: #1DA851;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
 
         .copy-section {
             background: white;
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
             border: 1px solid #ddd;
         }
 
         .copy-text {
             font-family: monospace;
-            padding: 15px;
+            padding: 12px;
             background: #f8f9fa;
             border-radius: 5px;
-            margin: 15px 0;
+            margin: 12px 0;
             word-break: break-word;
+            font-size: 0.9rem;
+            line-height: 1.4;
         }
 
         .btn-copy {
             background: #6f42c1;
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 12px 20px;
             border-radius: 5px;
             cursor: pointer;
-            display: inline-flex;
+            display: flex;
             align-items: center;
+            justify-content: center;
             gap: 5px;
-        }
-
-        .btn-copy:hover {
-            background: #5e35b1;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 100%;
+            font-weight: 600;
+            min-height: 44px;
         }
 
         .hint {
             text-align: center;
             color: #666;
             font-style: italic;
-            margin-top: 20px;
-            padding: 0 30px;
+            margin-top: 15px;
+            padding: 0 15px;
+            font-size: 0.9rem;
+            line-height: 1.4;
         }
 
         footer {
             text-align: center;
-            padding: 20px;
+            padding: 15px;
             color: white;
             background: #333;
-            margin-top: 20px;
-            border-radius: 0 0 20px 20px;
+            margin-top: 15px;
+            border-radius: 0 0 16px 16px;
+            font-size: 0.85rem;
         }
 
         .progress-bar {
-            height: 8px;
+            height: 6px;
             background: #e0e0e0;
-            border-radius: 4px;
-            margin-top: 10px;
+            border-radius: 3px;
+            margin-top: 8px;
             overflow: hidden;
         }
 
@@ -516,14 +487,140 @@
             width: 0%;
             transition: width 0.3s;
         }
+
+        /* Планшет и десктоп */
+        @media (min-width: 768px) {
+            body {
+                padding: 20px;
+            }
+            
+            header {
+                padding: 30px;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .game-info {
+                gap: 20px;
+                padding: 20px;
+            }
+            
+            .info-box {
+                padding: 15px;
+            }
+            
+            .info-value {
+                font-size: 2rem;
+            }
+            
+            .info-label {
+                font-size: 0.9rem;
+            }
+            
+            .questions-navigation {
+                padding: 15px 30px;
+            }
+            
+            .nav-dots {
+                grid-template-columns: repeat(10, 1fr);
+                gap: 8px;
+            }
+            
+            .question-container {
+                padding: 30px;
+            }
+            
+            .options-container {
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+            }
+            
+            .controls {
+                display: flex;
+                justify-content: space-between;
+                grid-template-columns: none;
+                gap: 0;
+            }
+            
+            .btn-check, .btn-reset {
+                grid-column: auto;
+                order: 0;
+            }
+            
+            .share-buttons {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* Маленькие телефоны */
+        @media (max-width: 360px) {
+            .nav-dots {
+                grid-template-columns: repeat(6, 1fr);
+            }
+            
+            .nav-dot {
+                width: 32px;
+                height: 32px;
+                font-size: 0.8rem;
+            }
+            
+            .question-text {
+                font-size: 1rem;
+                padding: 12px;
+            }
+            
+            .option {
+                padding: 12px;
+                min-height: 54px;
+            }
+            
+            .option-letter {
+                width: 28px;
+                height: 28px;
+                margin-right: 10px;
+            }
+            
+            .btn {
+                font-size: 0.85rem;
+                padding: 12px 8px;
+            }
+        }
+
+        /* Горизонтальная ориентация */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .game-info {
+                grid-template-columns: repeat(3, 1fr);
+                padding: 10px;
+                gap: 10px;
+            }
+            
+            .question-container {
+                min-height: 200px;
+                padding: 15px;
+            }
+            
+            .option {
+                min-height: 50px;
+                padding: 10px 12px;
+            }
+            
+            .controls {
+                padding: 10px 15px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1><i class=</i> OGE Word Formation</h1>
+            <h1><i class="fas fa-language"></i> OGE Word Formation</h1>
             <p class="subtitle">Тест на словообразование в английском языке • 40 заданий</p>
-			Test1
         </header>
 
         <div class="game-info">
@@ -544,7 +641,6 @@
             </div>
         </div>
 
-        <!-- Навигация по вопросам -->
         <div class="questions-navigation">
             <div class="nav-title">Навигация по вопросам:</div>
             <div class="nav-dots" id="nav-dots">
@@ -570,11 +666,11 @@
                 </button>
                 
                 <button class="btn btn-reset" id="reset-btn">
-                    <i class="fas fa-redo"></i> Начать заново
+                    <i class="fas fa-redo"></i> Заново
                 </button>
                 
                 <button class="btn btn-check" id="check-btn">
-                    <i class="fas fa-check-circle"></i> Проверить ответ
+                    <i class="fas fa-check-circle"></i> Проверить
                 </button>
                 
                 <button class="btn btn-next" id="next-btn" disabled>
@@ -582,12 +678,12 @@
                 </button>
                 
                 <div class="next-hint" id="next-hint" style="display: none;">
-                    <i class="fas fa-exclamation-circle"></i> Сначала проверьте ответ на текущий вопрос
+                    <i class="fas fa-exclamation-circle"></i> Сначала проверьте ответ
                 </div>
             </div>
             
             <div class="hint">
-                <i class="fas fa-info-circle"></i> Выберите вариант ответа, затем нажмите "Проверить ответ"
+                <i class="fas fa-info-circle"></i> Выберите вариант ответа, затем нажмите "Проверить"
             </div>
         </div>
 
@@ -623,15 +719,15 @@
                 
                 <div class="share-buttons">
                     <a href="#" class="btn-telegram" id="telegram-btn" target="_blank">
-                        <i class="fab fa-telegram"></i> Отправить в Telegram
+                        <i class="fab fa-telegram"></i> Telegram
                     </a>
                     
                     <a href="#" class="btn-whatsapp" id="whatsapp-btn" target="_blank">
-                        <i class="fab fa-whatsapp"></i> Поделиться в WhatsApp
+                        <i class="fab fa-whatsapp"></i> WhatsApp
                     </a>
                     
                     <button class="btn btn-reset" id="restart-btn">
-                        <i class="fas fa-redo"></i> Пройти ещё раз
+                        <i class="fas fa-redo"></i> Ещё раз
                     </button>
                 </div>
             </div>
@@ -643,7 +739,7 @@
     </div>
 
     <script>
-        // Оставляем 50 вопросов (удаляем последние 10 из 60)
+        // Оставляем 40 вопросов (уже есть 40)
         const questions = [
             // Вариант 1 (6 вопросов)
             {
@@ -867,7 +963,7 @@
                 correct: 1,
                 explanation: "Нужно существительное 'waiter' (официант)."
             },
-            // Вариант 7 (6 вопросов) - только первые 4 вопроса из этого варианта
+            // Вариант 7 (4 вопроса)
             {
                 text: "... that to be ______ in this activity you should start yoga in early childhood. (SUCCESS)",
                 options: ["success", "successful", "successfully", "succeed"],
@@ -941,6 +1037,9 @@
             resultsContainer.style.display = 'none';
             
             updateButtons();
+            
+            // Прокручиваем к началу
+            window.scrollTo(0, 0);
         }
 
         // Создание навигации по вопросам
@@ -971,6 +1070,8 @@
                     currentQuestion = index;
                     showQuestion(currentQuestion);
                     updateNavigation();
+                    // Прокручиваем к вопросу
+                    document.querySelector('.question-container').scrollIntoView({behavior: 'smooth', block: 'start'});
                 });
                 
                 navDots.appendChild(dot);
@@ -1112,6 +1213,13 @@
             if (checkedQuestions.every(q => q)) {
                 setTimeout(showResults, 500);
             }
+            
+            // Прокручиваем к объяснению, если оно есть
+            setTimeout(() => {
+                if (explanation.classList.contains('show')) {
+                    explanation.scrollIntoView({behavior: 'smooth', block: 'nearest'});
+                }
+            }, 100);
         }
 
         // Обновить прогресс
@@ -1147,10 +1255,10 @@
             
             if (isChecked) {
                 checkBtn.disabled = true;
-                checkBtn.innerHTML = '<i class="fas fa-check-circle"></i> Ответ проверен';
+                checkBtn.innerHTML = '<i class="fas fa-check-circle"></i> Проверено';
             } else {
                 checkBtn.disabled = !hasAnswer;
-                checkBtn.innerHTML = '<i class="fas fa-check-circle"></i> Проверить ответ';
+                checkBtn.innerHTML = '<i class="fas fa-check-circle"></i> Проверить';
             }
         }
 
@@ -1204,6 +1312,9 @@
             // Показываем результаты, скрываем тест
             testSection.style.display = 'none';
             resultsContainer.style.display = 'block';
+            
+            // Прокручиваем к результатам
+            window.scrollTo(0, 0);
         }
 
         // Копировать результат
@@ -1228,12 +1339,13 @@
             if (currentQuestion > 0) {
                 currentQuestion--;
                 showQuestion(currentQuestion);
+                // Прокручиваем к вопросу
+                document.querySelector('.question-container').scrollIntoView({behavior: 'smooth', block: 'start'});
             }
         });
 
         nextBtn.addEventListener('click', () => {
             // Кнопка "Вперед" заблокирована, если вопрос не проверен
-            // Эта проверка уже есть в updateButtons, но для надежности добавим здесь
             if (!checkedQuestions[currentQuestion]) {
                 alert('Пожалуйста, сначала проверьте ответ на текущий вопрос');
                 return;
@@ -1242,6 +1354,8 @@
             if (currentQuestion < questions.length - 1) {
                 currentQuestion++;
                 showQuestion(currentQuestion);
+                // Прокручиваем к вопросу
+                document.querySelector('.question-container').scrollIntoView({behavior: 'smooth', block: 'start'});
             }
         });
 
@@ -1258,6 +1372,16 @@
 
         // Начальная инициализация
         initTest();
+        
+        // Предотвращаем масштабирование при двойном тапе на мобильных устройствах
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function(event) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
     </script>
 </body>
 </html>
