@@ -6,7 +6,6 @@
     <title>OGE Word Formation - Тест по английскому</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Стили остаются без изменений */
         * {
             margin: 0;
             padding: 0;
@@ -23,8 +22,577 @@
             touch-action: manipulation;
         }
 
-        /* ... все остальные стили без изменений ... */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+        }
 
+        header {
+            background: linear-gradient(to right, #667eea, #764ba2);
+            color: white;
+            padding: 20px 15px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+            line-height: 1.4;
+        }
+
+        .game-info {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .info-box {
+            text-align: center;
+            padding: 12px 8px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.08);
+        }
+
+        .info-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 3px;
+        }
+
+        .info-label {
+            font-size: 0.8rem;
+            color: #666;
+            line-height: 1.2;
+        }
+
+        /* Навигация по вопросам */
+        .questions-navigation {
+            padding: 12px 15px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .nav-title {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .nav-dots {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 6px;
+            justify-content: center;
+            max-height: 200px;
+            overflow-y: auto;
+            padding: 5px;
+        }
+
+        .nav-dot {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+            flex-shrink: 0;
+        }
+
+        .nav-dot:active {
+            transform: scale(0.95);
+        }
+
+        .nav-dot.not-answered {
+            background: #e0e0e0;
+            color: #666;
+        }
+
+        .nav-dot.answered {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .nav-dot.wrong {
+            background: #f44336;
+            color: white;
+        }
+
+        .nav-dot.current {
+            border-color: #667eea;
+            transform: scale(1.05);
+            box-shadow: 0 0 8px rgba(102, 126, 234, 0.4);
+        }
+
+        .question-container {
+            padding: 20px 15px;
+            min-height: 300px;
+        }
+
+        .question-number {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 36px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9ff;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            word-wrap: break-word;
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .option {
+            padding: 16px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            background: white;
+            min-height: 60px;
+        }
+
+        .option:active {
+            transform: translateY(-1px);
+        }
+
+        .option.selected {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .option.correct {
+            border-color: #4CAF50;
+            background: #e8f5e9;
+        }
+
+        .option.incorrect {
+            border-color: #f44336;
+            background: #ffebee;
+        }
+
+        .option-letter {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #667eea;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .option-text {
+            flex: 1;
+            font-size: 1rem;
+        }
+
+        .explanation {
+            margin-top: 15px;
+            padding: 12px;
+            background: #e8f5e9;
+            border-radius: 8px;
+            border-left: 4px solid #4CAF50;
+            display: none;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-top: 2px solid #e9ecef;
+            position: relative;
+        }
+
+        .btn {
+            padding: 14px 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+            text-align: center;
+            min-height: 48px;
+        }
+
+        .btn:active:not(:disabled) {
+            transform: translateY(-1px);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-prev {
+            background: #6c757d;
+            color: white;
+            grid-column: 1;
+        }
+
+        .btn-next {
+            background: #28a745;
+            color: white;
+            grid-column: 2;
+        }
+
+        .btn-check {
+            background: #ffc107;
+            color: #212529;
+            grid-column: 1 / span 2;
+            order: 1;
+        }
+
+        .btn-reset {
+            background: #6c757d;
+            color: white;
+            grid-column: 1 / span 2;
+            order: 2;
+        }
+
+        .next-hint {
+            position: absolute;
+            bottom: -22px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #f44336;
+            font-weight: 500;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.7; }
+            50% { opacity: 1; }
+            100% { opacity: 0.7; }
+        }
+
+        .results-container {
+            padding: 20px 15px;
+            text-align: center;
+            display: none;
+        }
+
+        .result-emoji {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .result-title {
+            color: #667eea;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .result-score {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #764ba2;
+            margin: 15px 0;
+        }
+
+        .result-details {
+            background: #f8f9ff;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px auto;
+            max-width: 100%;
+            border: 2px dashed #667eea;
+        }
+
+        .result-details h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .result-details p {
+            font-size: 1rem;
+            margin: 8px 0;
+            line-height: 1.4;
+        }
+
+        .result-message {
+            font-size: 1.1rem;
+            margin: 20px 0;
+            color: #333;
+            line-height: 1.4;
+            padding: 0 10px;
+        }
+
+        .share-section {
+            background: #f0f8ff;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+
+        .share-section h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        .share-buttons {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn-telegram, .btn-whatsapp {
+            background: #0088cc;
+            color: white;
+            text-decoration: none;
+            padding: 14px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            min-height: 48px;
+        }
+
+        .btn-whatsapp {
+            background: #25D366;
+        }
+
+        .copy-section {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border: 1px solid #ddd;
+        }
+
+        .copy-text {
+            font-family: monospace;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            margin: 12px 0;
+            word-break: break-word;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .btn-copy {
+            background: #6f42c1;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            width: 100%;
+            font-weight: 600;
+            min-height: 44px;
+        }
+
+        .hint {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            margin-top: 15px;
+            padding: 0 15px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        footer {
+            text-align: center;
+            padding: 15px;
+            color: white;
+            background: #333;
+            margin-top: 15px;
+            border-radius: 0 0 16px 16px;
+            font-size: 0.85rem;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 3px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        /* Планшет и десктоп */
+        @media (min-width: 768px) {
+            body {
+                padding: 20px;
+            }
+            
+            header {
+                padding: 30px;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .game-info {
+                gap: 20px;
+                padding: 20px;
+            }
+            
+            .info-box {
+                padding: 15px;
+            }
+            
+            .info-value {
+                font-size: 2rem;
+            }
+            
+            .info-label {
+                font-size: 0.9rem;
+            }
+            
+            .questions-navigation {
+                padding: 15px 30px;
+            }
+            
+            .nav-dots {
+                grid-template-columns: repeat(10, 1fr);
+                gap: 8px;
+            }
+            
+            .question-container {
+                padding: 30px;
+            }
+            
+            .options-container {
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+            }
+            
+            .controls {
+                display: flex;
+                justify-content: space-between;
+                grid-template-columns: none;
+                gap: 0;
+            }
+            
+            .btn-check, .btn-reset {
+                grid-column: auto;
+                order: 0;
+            }
+            
+            .share-buttons {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* Маленькие телефоны */
+        @media (max-width: 360px) {
+            .nav-dots {
+                grid-template-columns: repeat(6, 1fr);
+            }
+            
+            .nav-dot {
+                width: 32px;
+                height: 32px;
+                font-size: 0.8rem;
+            }
+            
+            .question-text {
+                font-size: 1rem;
+                padding: 12px;
+            }
+            
+            .option {
+                padding: 12px;
+                min-height: 54px;
+            }
+            
+            .option-letter {
+                width: 28px;
+                height: 28px;
+                margin-right: 10px;
+            }
+            
+            .btn {
+                font-size: 0.85rem;
+                padding: 12px 8px;
+            }
+        }
+
+        /* Горизонтальная ориентация */
         @media (max-height: 500px) and (orientation: landscape) {
             .game-info {
                 grid-template-columns: repeat(3, 1fr);
@@ -49,7 +617,6 @@
     </style>
 </head>
 <body>
-    <!-- HTML разметка остается без изменений -->
     <div class="container">
         <header>
             <h1><i class="fas fa-language"></i> OGE Word Formation</h1>
@@ -174,302 +741,295 @@
     <script>
         // Функция для перемешивания массива (алгоритм Фишера-Йетса)
         function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
             }
-            return array;
+            return newArray;
         }
 
-        // Функция для перемешивания вариантов ответов с сохранением правильного ответа
-        function shuffleQuestionOptions(question) {
-            // Создаем массив объектов с вариантами ответов и их индексами
-            const optionsWithIndices = question.options.map((option, index) => ({
-                text: option,
-                originalIndex: index
-            }));
+        // Функция для создания перемешанных вопросов с рандомным порядком ответов
+        function createShuffledQuestions() {
+            const questions = [
+                // Вариант 1 (6 вопросов)
+                {
+                    text: "There are a lot of bicycles on the streets of our town and that is probably why it looks so green and ______. (BEAUTY)",
+                    options: ["beautiful", "beauty", "beautifully", "beautify"],
+                    correct: 0,
+                    explanation: "Нужно прилагательное 'beautiful' (красивый), так как оно описывает город."
+                },
+                {
+                    text: "There are cycle lanes all over the town so using your bike to get to school or to the office is safe and convenient. ______, some people still prefer driving cars even for short distances. (FORTUNATELY)",
+                    options: ["Fortunately", "Fortune", "Unfortunate", "Unfortunately"],
+                    correct: 3,
+                    explanation: "Нужно наречие 'Unfortunately' (к сожалению), так как оно выражает сожаление."
+                },
+                {
+                    text: "They make the environment less ______. (HEALTH)",
+                    options: ["healthily", "healthy", "health", "healthful"],
+                    correct: 1,
+                    explanation: "Нужно прилагательное 'healthy' (здоровый) после глагола 'make'."
+                },
+                {
+                    text: "As for me, I enjoy riding my bike very much and all my friends say that I'm a good ______. (RIDE)",
+                    options: ["rider", "ride", "riding", "ridden"],
+                    correct: 0,
+                    explanation: "Нужно существительное 'rider' (наездник, велосипедист)."
+                },
+                {
+                    text: "Next month I'm going to take part in a regional cycling ______ and I hope to win it. (COMPETE)",
+                    options: ["competitive", "competitor", "competition", "compete"],
+                    correct: 2,
+                    explanation: "Нужно существительное 'competition' (соревнование)."
+                },
+                {
+                    text: "I don't think I will stop riding my bicycle till I'm ______ old. (REAL)",
+                    options: ["unreal", "really", "realist", "real"],
+                    correct: 1,
+                    explanation: "Нужно наречие 'really' (действительно) для усиления прилагательного 'old'."
+                },
+                // Вариант 2 (6 вопросов)
+                {
+                    text: "Over 2,000 years ago the Celts in Britain had a special holiday in late October to mark the ______ of winter. (BEGIN)",
+                    options: ["begin", "beginning", "beginner", "began"],
+                    correct: 1,
+                    explanation: "Нужно существительное 'beginning' (начало)."
+                },
+                {
+                    text: "Another autumn ______ was connected with the passing of the dead. (CELEBRATE)",
+                    options: ["celebrate", "celebrity", "celebration", "celebratory"],
+                    correct: 2,
+                    explanation: "Нужно существительное 'celebration' (празднование)."
+                },
+                {
+                    text: "On Halloween children often dress up as ghosts, witches and monsters... they are even ______! (FUN)",
+                    options: ["funny", "fun", "funnily", "funnier"],
+                    correct: 0,
+                    explanation: "Нужно прилагательное 'funny' (забавный)."
+                },
+                {
+                    text: "But remember that if the children don't get the sweets, they may play some ______ joke. (PLEASANT)",
+                    options: ["pleasant", "unpleasant", "pleasantly", "pleasure"],
+                    correct: 1,
+                    explanation: "Нужно прилагательное с отрицательным значением 'unpleasant' (неприятный)."
+                },
+                {
+                    text: "Pumpkins ______ symbolize Halloween. (TRADITIONAL)",
+                    options: ["tradition", "traditionally", "traditional", "traditionalize"],
+                    correct: 1,
+                    explanation: "Нужно наречие 'traditionally' (традиционно)."
+                },
+                {
+                    text: "People ______ make lanterns from them. (USUAL)",
+                    options: ["usual", "usually", "unusual", "use"],
+                    correct: 1,
+                    explanation: "Нужно наречие 'usually' (обычно)."
+                },
+                // Вариант 3 (6 вопросов)
+                {
+                    text: "It was a ______ day but the weather couldn't spoil my excellent mood. (RAIN)",
+                    options: ["rainy", "rain", "raining", "rained"],
+                    correct: 0,
+                    explanation: "Нужно прилагательное 'rainy' (дождливый)."
+                },
+                {
+                    text: "Many people associate this city with the ______ musical band, the Beatles. (FAME)",
+                    options: ["fame", "famously", "famous", "famed"],
+                    correct: 2,
+                    explanation: "Нужно прилагательное 'famous' (известный)."
+                },
+                {
+                    text: "It's also ______ to imagine Liverpool without its other great passion: football! (POSSIBLE)",
+                    options: ["possible", "impossible", "possibly", "possibility"],
+                    correct: 1,
+                    explanation: "Нужно прилагательное с отрицательным значением 'impossible' (невозможно)."
+                },
+                {
+                    text: "Everton is older and was more ______ in the past. (SUCCESS)",
+                    options: ["success", "successful", "successfully", "succeed"],
+                    correct: 1,
+                    explanation: "Нужно прилагательное 'successful' (успешный)."
+                },
+                {
+                    text: "I've been Liverpool's ______ since I was a small boy. (SUPPORT)",
+                    options: ["support", "supportive", "supporter", "supporting"],
+                    correct: 2,
+                    explanation: "Нужно существительное 'supporter' (болельщик)."
+                },
+                {
+                    text: "It was very ______ and it was one of the most important memories of my childhood. (EXCITE)",
+                    options: ["excite", "exciting", "excited", "excitement"],
+                    correct: 1,
+                    explanation: "Нужно прилагательное 'exciting' (захватывающий)."
+                },
+                // Вариант 4 (6 вопросов)
+                {
+                    text: "Sometimes they watched college games, but normally they watched ______ teams play. (PROFESSION)",
+                    options: ["profession", "professional", "professionally", "professor"],
+                    correct: 1,
+                    explanation: "Нужно прилагательное 'professional' (профессиональный)."
+                },
+                {
+                    text: "Two teams were playing in the final match of the ______. (CHAMPION)",
+                    options: ["champion", "champions", "championship", "championed"],
+                    correct: 2,
+                    explanation: "Нужно существительное 'championship' (чемпионат)."
+                },
+                {
+                    text: "Kelly's favourite team had actually got to the final this year, which ______ happened. (RARE)",
+                    options: ["rare", "rarity", "rarely", "rarer"],
+                    correct: 2,
+                    explanation: "Нужно наречие 'rarely' (редко)."
+                },
+                {
+                    text: "\"It will be ______ if they lose!\" Kelly thought. (FAIR)",
+                    options: ["fair", "fairly", "unfair", "fairness"],
+                    correct: 2,
+                    explanation: "Нужно прилагательное с отрицательным значением 'unfair' (несправедливо)."
+                },
+                {
+                    text: "Uncle Jolyon had brought a ______ cheese sauce and chips. (SPICE)",
+                    options: ["spice", "spicy", "spices", "spiced"],
+                    correct: 1,
+                    explanation: "Нужно прилагательное 'spicy' (острый)."
+                },
+                {
+                    text: "It seemed to Kelly that every ______ of her team was doing their best. (PLAY)",
+                    options: ["player", "play", "playing", "playful"],
+                    correct: 0,
+                    explanation: "Нужно существительное 'player' (игрок)."
+                },
+                // Вариант 5 (6 вопросов)
+                {
+                    text: "It affects where we choose to live... and perhaps even our ______ character. (NATION)",
+                    options: ["nation", "national", "nationally", "international"],
+                    correct: 1,
+                    explanation: "Нужно прилагательное 'national' (национальный)."
+                },
+                {
+                    text: "A ______ day can blow away the deepest depression. (SUN)",
+                    options: ["sun", "sunny", "sunnier", "sunned"],
+                    correct: 1,
+                    explanation: "Нужно прилагательное 'sunny' (солнечный)."
+                },
+                {
+                    text: "And a gloomy rainy day can make you feel lonely and ______. (HAPPY)",
+                    options: ["happy", "unhappy", "happily", "happiness"],
+                    correct: 1,
+                    explanation: "Нужно прилагательное с отрицательным значением 'unhappy' (несчастный)."
+                },
+                {
+                    text: "'I'm feeling a bit under the weather' is a common complaint in Britain, ______ on Monday mornings. (ESPECIAL)",
+                    options: ["especial", "especially", "special", "specialize"],
+                    correct: 1,
+                    explanation: "Нужно наречие 'especially' (особенно)."
+                },
+                {
+                    text: "The weather can really be ______ for moods. (RESPONSE)",
+                    options: ["response", "responsible", "responsibly", "responsiveness"],
+                    correct: 1,
+                    explanation: "Нужно прилагательное 'responsible' (ответственный)."
+                },
+                {
+                    text: "There is a ______ between our mood and the weather we are having. (CONNECT)",
+                    options: ["connect", "connection", "connective", "connecting"],
+                    correct: 1,
+                    explanation: "Нужно существительное 'connection' (связь)."
+                },
+                // Вариант 6 (6 вопросов)
+                {
+                    text: "The pie gained ______ in the Middle Ages. (POPULAR)",
+                    options: ["popular", "popularity", "popularly", "populate"],
+                    correct: 1,
+                    explanation: "Нужно существительное 'popularity' (популярность)."
+                },
+                {
+                    text: "... because it was easy to cook, ______ and tasty. (HEALTH)",
+                    options: ["health", "healthily", "healthy", "healthful"],
+                    correct: 2,
+                    explanation: "Нужно прилагательное 'healthy' (здоровый)."
+                },
+                {
+                    text: "Until the 16th century potatoes were ______ known as pig food. (MAIN)",
+                    options: ["main", "mainly", "mainline", "mainland"],
+                    correct: 1,
+                    explanation: "Нужно наречие 'mainly' (в основном)."
+                },
+                {
+                    text: "The Shepherd's pie recipe changed to include potatoes as an ingredient. And the fame of this _______ dish doubled. (TASTE)",
+                    options: ["taste", "tasty", "tasteful", "tasteless"],
+                    correct: 1,
+                    explanation: "Нужно прилагательное 'tasty' (вкусный)."
+                },
+                {
+                    text: "Now Shepherd's pie is considered to be a ______ British food. (TRADITION)",
+                    options: ["tradition", "traditional", "traditionally", "traditionalist"],
+                    correct: 1,
+                    explanation: "Нужно прилагательное 'traditional' (традиционный)."
+                },
+                {
+                    text: "In Canada, for example, a ______ in a restaurant would present it to tourists as Chinese pie. (WAIT)",
+                    options: ["wait", "waiter", "waiting", "waitress"],
+                    correct: 1,
+                    explanation: "Нужно существительное 'waiter' (официант)."
+                },
+                // Вариант 7 (4 вопроса)
+                {
+                    text: "... that to be ______ in this activity you should start yoga in early childhood. (SUCCESS)",
+                    options: ["success", "successful", "successfully", "succeed"],
+                    correct: 1,
+                    explanation: "Нужно прилагательное 'successful' (успешный)."
+                },
+                {
+                    text: "What you really need is enthusiasm and a good ______ – yogis often call them a guru. (TRAIN)",
+                    options: ["train", "training", "trainer", "trained"],
+                    correct: 2,
+                    explanation: "Нужно существительное 'trainer' (тренер)."
+                },
+                {
+                    text: "Yoga is not a ______. (COMPETE)",
+                    options: ["compete", "competition", "competitor", "competitive"],
+                    correct: 1,
+                    explanation: "Нужно существительное 'competition' (соревнование)."
+                },
+                {
+                    text: "You can choose any pace that is ______ for you. (COMFORT)",
+                    options: ["comfort", "comforting", "comfortable", "comfortably"],
+                    correct: 2,
+                    explanation: "Нужно прилагательное 'comfortable' (удобный)."
+                }
+            ];
             
-            // Перемешиваем варианты
-            const shuffledOptionsWithIndices = shuffleArray([...optionsWithIndices]);
+            // Создаем копию вопросов с перемешанными ответами
+            const shuffledQuestions = questions.map(question => {
+                // Сохраняем правильный ответ
+                const correctAnswer = question.options[question.correct];
+                
+                // Перемешиваем варианты ответов
+                const shuffledOptions = shuffleArray([...question.options]);
+                
+                // Находим новый индекс правильного ответа в перемешанном массиве
+                const newCorrectIndex = shuffledOptions.indexOf(correctAnswer);
+                
+                // Возвращаем новый объект вопроса
+                return {
+                    text: question.text,
+                    options: shuffledOptions,
+                    correct: newCorrectIndex,
+                    explanation: question.explanation
+                };
+            });
             
-            // Находим новый индекс правильного ответа
-            const newCorrectIndex = shuffledOptionsWithIndices.findIndex(
-                option => option.originalIndex === question.correct
-            );
-            
-            // Извлекаем только тексты вариантов
-            const shuffledOptions = shuffledOptionsWithIndices.map(option => option.text);
-            
-            // Возвращаем новый объект вопроса с перемешанными вариантами
-            return {
-                ...question,
-                options: shuffledOptions,
-                correct: newCorrectIndex,
-                // Сохраняем оригинальный порядок для отладки (можно убрать)
-                _originalOrder: question.options,
-                _originalCorrect: question.correct
-            };
+            return shuffledQuestions;
         }
-
-        // Оригинальные вопросы (без изменений)
-        const originalQuestions = [
-            // Вариант 1 (6 вопросов)
-            {
-                text: "There are a lot of bicycles on the streets of our town and that is probably why it looks so green and ______. (BEAUTY)",
-                options: ["beautiful", "beauty", "beautifully", "beautify"],
-                correct: 0,
-                explanation: "Нужно прилагательное 'beautiful' (красивый), так как оно описывает город."
-            },
-            {
-                text: "There are cycle lanes all over the town so using your bike to get to school or to the office is safe and convenient. ______, some people still prefer driving cars even for short distances. (FORTUNATELY)",
-                options: ["Fortunately", "Fortune", "Unfortunate", "Unfortunately"],
-                correct: 3,
-                explanation: "Нужно наречие 'Unfortunately' (к сожалению), так как оно выражает сожаление."
-            },
-            {
-                text: "They make the environment less ______. (HEALTH)",
-                options: ["healthily", "healthy", "health", "healthful"],
-                correct: 1,
-                explanation: "Нужно прилагательное 'healthy' (здоровый) после глагола 'make'."
-            },
-            {
-                text: "As for me, I enjoy riding my bike very much and all my friends say that I'm a good ______. (RIDE)",
-                options: ["rider", "ride", "riding", "ridden"],
-                correct: 0,
-                explanation: "Нужно существительное 'rider' (наездник, велосипедист)."
-            },
-            {
-                text: "Next month I'm going to take part in a regional cycling ______ and I hope to win it. (COMPETE)",
-                options: ["competitive", "competitor", "competition", "compete"],
-                correct: 2,
-                explanation: "Нужно существительное 'competition' (соревнование)."
-            },
-            {
-                text: "I don't think I will stop riding my bicycle till I'm ______ old. (REAL)",
-                options: ["unreal", "really", "realist", "real"],
-                correct: 1,
-                explanation: "Нужно наречие 'really' (действительно) для усиления прилагательного 'old'."
-            },
-            // Вариант 2 (6 вопросов)
-            {
-                text: "Over 2,000 years ago the Celts in Britain had a special holiday in late October to mark the ______ of winter. (BEGIN)",
-                options: ["begin", "beginning", "beginner", "began"],
-                correct: 1,
-                explanation: "Нужно существительное 'beginning' (начало)."
-            },
-            {
-                text: "Another autumn ______ was connected with the passing of the dead. (CELEBRATE)",
-                options: ["celebrate", "celebrity", "celebration", "celebratory"],
-                correct: 2,
-                explanation: "Нужно существительное 'celebration' (празднование)."
-            },
-            {
-                text: "On Halloween children often dress up as ghosts, witches and monsters... they are even ______! (FUN)",
-                options: ["funny", "fun", "funnily", "funnier"],
-                correct: 0,
-                explanation: "Нужно прилагательное 'funny' (забавный)."
-            },
-            {
-                text: "But remember that if the children don't get the sweets, they may play some ______ joke. (PLEASANT)",
-                options: ["pleasant", "unpleasant", "pleasantly", "pleasure"],
-                correct: 1,
-                explanation: "Нужно прилагательное с отрицательным значением 'unpleasant' (неприятный)."
-            },
-            {
-                text: "Pumpkins ______ symbolize Halloween. (TRADITIONAL)",
-                options: ["tradition", "traditionally", "traditional", "traditionalize"],
-                correct: 1,
-                explanation: "Нужно наречие 'traditionally' (традиционно)."
-            },
-            {
-                text: "People ______ make lanterns from them. (USUAL)",
-                options: ["usual", "usually", "unusual", "use"],
-                correct: 1,
-                explanation: "Нужно наречие 'usually' (обычно)."
-            },
-            // Вариант 3 (6 вопросов)
-            {
-                text: "It was a ______ day but the weather couldn't spoil my excellent mood. (RAIN)",
-                options: ["rainy", "rain", "raining", "rained"],
-                correct: 0,
-                explanation: "Нужно прилагательное 'rainy' (дождливый)."
-            },
-            {
-                text: "Many people associate this city with the ______ musical band, the Beatles. (FAME)",
-                options: ["fame", "famously", "famous", "famed"],
-                correct: 2,
-                explanation: "Нужно прилагательное 'famous' (известный)."
-            },
-            {
-                text: "It's also ______ to imagine Liverpool without its other great passion: football! (POSSIBLE)",
-                options: ["possible", "impossible", "possibly", "possibility"],
-                correct: 1,
-                explanation: "Нужно прилагательное с отрицательным значением 'impossible' (невозможно)."
-            },
-            {
-                text: "Everton is older and was more ______ in the past. (SUCCESS)",
-                options: ["success", "successful", "successfully", "succeed"],
-                correct: 1,
-                explanation: "Нужно прилагательное 'successful' (успешный)."
-            },
-            {
-                text: "I've been Liverpool's ______ since I was a small boy. (SUPPORT)",
-                options: ["support", "supportive", "supporter", "supporting"],
-                correct: 2,
-                explanation: "Нужно существительное 'supporter' (болельщик)."
-            },
-            {
-                text: "It was very ______ and it was one of the most important memories of my childhood. (EXCITE)",
-                options: ["excite", "exciting", "excited", "excitement"],
-                correct: 1,
-                explanation: "Нужно прилагательное 'exciting' (захватывающий)."
-            },
-            // Вариант 4 (6 вопросов)
-            {
-                text: "Sometimes they watched college games, but normally they watched ______ teams play. (PROFESSION)",
-                options: ["profession", "professional", "professionally", "professor"],
-                correct: 1,
-                explanation: "Нужно прилагательное 'professional' (профессиональный)."
-            },
-            {
-                text: "Two teams were playing in the final match of the ______. (CHAMPION)",
-                options: ["champion", "champions", "championship", "championed"],
-                correct: 2,
-                explanation: "Нужно существительное 'championship' (чемпионат)."
-            },
-            {
-                text: "Kelly's favourite team had actually got to the final this year, which ______ happened. (RARE)",
-                options: ["rare", "rarity", "rarely", "rarer"],
-                correct: 2,
-                explanation: "Нужно наречие 'rarely' (редко)."
-            },
-            {
-                text: "\"It will be ______ if they lose!\" Kelly thought. (FAIR)",
-                options: ["fair", "fairly", "unfair", "fairness"],
-                correct: 2,
-                explanation: "Нужно прилагательное с отрицательным значением 'unfair' (несправедливо)."
-            },
-            {
-                text: "Uncle Jolyon had brought a ______ cheese sauce and chips. (SPICE)",
-                options: ["spice", "spicy", "spices", "spiced"],
-                correct: 1,
-                explanation: "Нужно прилагательное 'spicy' (острый)."
-            },
-            {
-                text: "It seemed to Kelly that every ______ of her team was doing their best. (PLAY)",
-                options: ["player", "play", "playing", "playful"],
-                correct: 0,
-                explanation: "Нужно существительное 'player' (игрок)."
-            },
-            // Вариант 5 (6 вопросов)
-            {
-                text: "It affects where we choose to live... and perhaps even our ______ character. (NATION)",
-                options: ["nation", "national", "nationally", "international"],
-                correct: 1,
-                explanation: "Нужно прилагательное 'national' (национальный)."
-            },
-            {
-                text: "A ______ day can blow away the deepest depression. (SUN)",
-                options: ["sun", "sunny", "sunnier", "sunned"],
-                correct: 1,
-                explanation: "Нужно прилагательное 'sunny' (солнечный)."
-            },
-            {
-                text: "And a gloomy rainy day can make you feel lonely and ______. (HAPPY)",
-                options: ["happy", "unhappy", "happily", "happiness"],
-                correct: 1,
-                explanation: "Нужно прилагательное с отрицательным значением 'unhappy' (несчастный)."
-            },
-            {
-                text: "'I'm feeling a bit under the weather' is a common complaint in Britain, ______ on Monday mornings. (ESPECIAL)",
-                options: ["especial", "especially", "special", "specialize"],
-                correct: 1,
-                explanation: "Нужно наречие 'especially' (особенно)."
-            },
-            {
-                text: "The weather can really be ______ for moods. (RESPONSE)",
-                options: ["response", "responsible", "responsibly", "responsiveness"],
-                correct: 1,
-                explanation: "Нужно прилагательное 'responsible' (ответственный)."
-            },
-            {
-                text: "There is a ______ between our mood and the weather we are having. (CONNECT)",
-                options: ["connect", "connection", "connective", "connecting"],
-                correct: 1,
-                explanation: "Нужно существительное 'connection' (связь)."
-            },
-            // Вариант 6 (6 вопросов)
-            {
-                text: "The pie gained ______ in the Middle Ages. (POPULAR)",
-                options: ["popular", "popularity", "popularly", "populate"],
-                correct: 1,
-                explanation: "Нужно существительное 'popularity' (популярность)."
-            },
-            {
-                text: "... because it was easy to cook, ______ and tasty. (HEALTH)",
-                options: ["health", "healthily", "healthy", "healthful"],
-                correct: 2,
-                explanation: "Нужно прилагательное 'healthy' (здоровый)."
-            },
-            {
-                text: "Until the 16th century potatoes were ______ known as pig food. (MAIN)",
-                options: ["main", "mainly", "mainline", "mainland"],
-                correct: 1,
-                explanation: "Нужно наречие 'mainly' (в основном)."
-            },
-            {
-                text: "The Shepherd's pie recipe changed to include potatoes as an ingredient. And the fame of this _______ dish doubled. (TASTE)",
-                options: ["taste", "tasty", "tasteful", "tasteless"],
-                correct: 1,
-                explanation: "Нужно прилагательное 'tasty' (вкусный)."
-            },
-            {
-                text: "Now Shepherd's pie is considered to be a ______ British food. (TRADITION)",
-                options: ["tradition", "traditional", "traditionally", "traditionalist"],
-                correct: 1,
-                explanation: "Нужно прилагательное 'traditional' (традиционный)."
-            },
-            {
-                text: "In Canada, for example, a ______ in a restaurant would present it to tourists as Chinese pie. (WAIT)",
-                options: ["wait", "waiter", "waiting", "waitress"],
-                correct: 1,
-                explanation: "Нужно существительное 'waiter' (официант)."
-            },
-            // Вариант 7 (4 вопроса)
-            {
-                text: "... that to be ______ in this activity you should start yoga in early childhood. (SUCCESS)",
-                options: ["success", "successful", "successfully", "succeed"],
-                correct: 1,
-                explanation: "Нужно прилагательное 'successful' (успешный)."
-            },
-            {
-                text: "What you really need is enthusiasm and a good ______ – yogis often call them a guru. (TRAIN)",
-                options: ["train", "training", "trainer", "trained"],
-                correct: 2,
-                explanation: "Нужно существительное 'trainer' (тренер)."
-            },
-            {
-                text: "Yoga is not a ______. (COMPETE)",
-                options: ["compete", "competition", "competitor", "competitive"],
-                correct: 1,
-                explanation: "Нужно существительное 'competition' (соревнование)."
-            },
-            {
-                text: "You can choose any pace that is ______ for you. (COMFORT)",
-                options: ["comfort", "comforting", "comfortable", "comfortably"],
-                correct: 2,
-                explanation: "Нужно прилагательное 'comfortable' (удобный)."
-            }
-        ];
-
-        // Переменная для хранения перемешанных вопросов
-        let questions = [];
 
         // Состояние теста
         let currentQuestion = 0;
         let score = 0;
         let userAnswers = [];
         let checkedQuestions = [];
+        let questions = []; // Будет заполнено при инициализации
 
         // DOM элементы
         const testSection = document.getElementById('test-section');
@@ -497,8 +1057,8 @@
 
         // Инициализация теста
         function initTest() {
-            // Перемешиваем варианты ответов для каждого вопроса
-            questions = originalQuestions.map(question => shuffleQuestionOptions(question));
+            // Создаем вопросы с перемешанными ответами
+            questions = createShuffledQuestions();
             
             currentQuestion = 0;
             score = 0;
@@ -518,6 +1078,8 @@
             
             // Прокручиваем к началу
             window.scrollTo(0, 0);
+            
+            console.log("Тест перезапущен с рандомным порядком ответов!");
         }
 
         // Создание навигации по вопросам
